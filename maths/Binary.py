@@ -2,7 +2,7 @@ from math import *
 
 
 # --------------------------------
-# This function is just able to take relative number, no float, no double
+# This function is just able to take natural number, no float, no double
 # @param value : is the value that you want to convert in binary code
 # @param octet : is how many octet do you want to represent your value
 # --------------------------------
@@ -30,6 +30,10 @@ def encodeToBinary(value, octet):
     return binary
 
 
+# --------------------------------
+# @param binary is the list of octet and bit
+# --------------------------------
+
 def decodeToNumber(binary):
     number = 0
     position = 0
@@ -44,7 +48,6 @@ def decodeToNumber(binary):
     print(number)
     return number
 
-
 def maxNumberOctets(octet):
     number = 0
     signed_value = 0
@@ -53,6 +56,6 @@ def maxNumberOctets(octet):
     return number
 
 
-encoded = encodeToBinary(147, 1)
+encoded = encodeToBinary(2**10, 1)
 decoded = decodeToNumber(encoded)
 print(encoded)
