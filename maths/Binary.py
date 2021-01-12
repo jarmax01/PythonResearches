@@ -5,20 +5,17 @@ from math import *
 # This function is just able to take relative number, no float, no double
 # @param value : is the value that you want to convert in binary code
 # @param octet : is how many octet do you want to represent your value
-# @param signed : insert true if your value is negative and false if your value is positive
 # --------------------------------
 
-def encodeToBinary(value, octet, signed):
+def encodeToBinary(value, octet):
     value = abs(value)
     binary = []  # List of your octet composed of 8 bits
     rest = value  # Local variable used for decomposition in power of two
     power = 0
-    while valueR > maxNumberOctets(octet, signed):
+    while value > maxNumberOctets(octet):
         octet += 1
-
     for i in range(octet):
         binary.insert(i, [0, 0, 0, 0, 0, 0, 0, 0])
-
     while rest != 0:
         if rest >= 2 ** power:
             power += 1
@@ -26,19 +23,36 @@ def encodeToBinary(value, octet, signed):
             if power != 0:
                 power -= 1
             rest -= 2 ** power
-            localOctet = binary[power//8]
+            localOctet = binary[power // 8]
             localOctet[7 - power] = 1
             power = 0
+    binary.reverse()
+    return binary
 
 
-def maxNumberOctets(octet, signed):
+def decodeToNumber(binary):
+    number = 0
+    position = 0
+    binary.reverse()
+    for octet in binary:
+        octet.reverse()
+        for bit in octet:
+            if bit == 1:
+                number += 2 ** (position)
+                print(position)
+            position += 1
+    print(number)
+    return number
+
+
+def maxNumberOctets(octet):
     number = 0
     signed_value = 0
-    if signed:
-        signed_value = 1
     for i in range(octet * 8 - signed_value):
         number += 2 ** i
     return number
 
 
-encodeToBinary(46, 1, False)
+encoded = encodeToBinary(147, 1)
+decoded = decodeToNumber(encoded)
+print(encoded)
