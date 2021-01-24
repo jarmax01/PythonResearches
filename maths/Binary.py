@@ -24,9 +24,11 @@ def encodeToBinary(value, octet):
                 power -= 1
             rest -= 2 ** power
             localOctet = binary[power // 8]
-            localOctet[7 - power] = 1
+            localOctet[power%8] = 1
             power = 0
-    binary.reverse()
+    binary.reverse() 
+    for octet in binary:
+        octet.reverse()
     return binary
 
 
@@ -36,16 +38,17 @@ def encodeToBinary(value, octet):
 
 def decodeToNumber(binary):
     number = 0
-    position = 0
+    power_position = 0
     binary.reverse()
-    for octet in binary:
-        octet.reverse()
-        for bit in octet:
-            if bit == 1:
-                number += 2 ** (position)
-                print(position)
-            position += 1
-    print(number)
+    for i in binary:
+        local_octet = i
+        local_octet.reverse()
+        for i in local_octet :
+            if i == 1:
+                number+=(2**power_position)
+            power_position+=1   
+        local_octet.reverse()
+    binary.reverse()  
     return number
 
 def maxNumberOctets(octet):
@@ -56,6 +59,7 @@ def maxNumberOctets(octet):
     return number
 
 
-encoded = encodeToBinary(2**10, 1)
+encoded = encodeToBinary(2**100, 1)
 decoded = decodeToNumber(encoded)
 print(encoded)
+print(decoded)
